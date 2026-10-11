@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://fieldcam.csylten.no/sitemap.xml

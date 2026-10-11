@@ -129,6 +129,7 @@ footer.site a:hover { color: var(--text); }
 @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } html { scroll-behavior: auto; }
   .gallery { overflow-x: auto; -webkit-mask-image: none; mask-image: none; } .shot[aria-hidden] { display: none; } }
+@media (max-width: 640px) { .stats { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .shot img { height: 240px; } .hero { padding-top: 36px; } }
 
 /* ---------- App Store: placeholder until the link exists ----------

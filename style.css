@@ -137,3 +137,7 @@ footer.site a:hover { color: var(--text); }
    live this is plain text; swap it for the official badge when the link arrives. */
 .soon { cursor: default; border-style: dashed; color: var(--muted); box-shadow: none; }
 .soon:hover { transform: none; background: var(--panel); }
+
+.store-badge { display: block; width: 144px; margin: 0 auto 14px; }
+.store-badge img { display: block; height: 48px; width: auto; }
+footer.site .legal { font-size: 0.8em; margin: 8px 0 0; }

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-itunes-app" content="app-id=6787454860">
+<title>FieldCam Team Template</title>
+<meta name="description" content="Someone shared a FieldCam Team Template with you. Get FieldCam, then scan the code inside the app.">
+<meta name="theme-color" content="#05070d">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<link rel="canonical" href="https://fieldcam.csylten.no/t/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FieldCam">
+<meta property="og:title" content="FieldCam Team Template">
+<meta property="og:description" content="Someone shared a FieldCam Team Template with you. Get FieldCam, then scan the code inside the app.">
+<meta property="og:url" content="https://fieldcam.csylten.no/t/">
+<meta property="og:image" content="https://fieldcam.csylten.no/logo.png">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/style.css">
+<!--
+  Landing page for Team Template QR codes. Both apps write
+  https://fieldcam.csylten.no/t/#fieldcam=<base64url JSON>  (spec/team-template.md in the app repo).
+  A phone without FieldCam that scans the code with its own camera opens this page.
+  The template is in the fragment (after #). Browsers never send the fragment to the server
+  (RFC 3986 section 3.5; RFC 9110 section 7.1), so GitHub Pages never sees it.
+  The script below reads only the template name, on the phone, to show it. It sends and stores nothing.
+  Google Play: when the app is published, replace the "soon" placeholder with Google's official badge
+  linking to https://play.google.com/store/apps/details?id=csy.fieldcam (applicationId in android/app/build.gradle.kts).
+-->
+</head>
+<body>
+<header class="site">
+  <a class="brand" href="/home.html"><img src="/logo.png" alt="" width="36" height="36"><span>FieldCam</span></a>
+  <nav><a href="/home.html">Home</a><a href="/manual.html">User Guide</a><a href="/support.html">Support</a><a href="/">Privacy</a></nav>
+</header>
+<main>
+<h1>FieldCam Team Template</h1>
+<p>Someone shared a FieldCam Team Template with you: camera, overlay and tag settings, so the whole crew works the same way.</p>
+<p id="template-name" hidden>Template: <strong></strong></p>
+
+<h2>1. Get FieldCam</h2>
+<p id="stores">
+  <a class="store-badge" id="store-ios" href="https://apps.apple.com/app/id6787454860" style="margin:0 0 14px"><img src="/app-store-badge.svg" alt="Download on the App Store" width="144" height="48"></a>
+  <span class="cta ghost soon" id="store-android" style="margin:0">Android: coming to Google Play</span>
+</p>
+
+<h2>2. Scan the code again, inside FieldCam</h2>
+<p>Open FieldCam and go to <strong>Settings → Team Template → Import Team Template</strong>. Scan the same QR code. FieldCam shows what is included before you use it.</p>
+<p class="muted">Already have FieldCam? Scan the code from inside the app, not with the phone's own camera. That way the settings go straight into FieldCam.</p>
+
+<h2>Privacy</h2>
+<p>The settings are in the part of the link after the <code>#</code>. Your browser never sends that part to this website. This page only shows the template name on your phone. It sends nothing and stores nothing. See the <a href="/">privacy policy</a>.</p>
+</main>
+<footer class="site"><p>FieldCam · <a href="/manual.html">User Guide</a> · <a href="/support.html">Support</a> · <a href="/">Privacy Policy</a></p>
+<p class="legal">Apple, the Apple logo and App Store are trademarks of Apple Inc., registered in the U.S. and other countries.</p></footer>
+<script>
+(function () {
+  // Show the template name from the fragment. Same format the apps decode:
+  // "#fieldcam=" followed by base64url JSON without padding; the name is the "nm" key.
+  try {
+    var marker = "#fieldcam=";
+    var i = location.hash.indexOf(marker);
+    if (i >= 0) {
+      var b64 = location.hash.slice(i + marker.length).replace(/-/g, "+").replace(/_/g, "/");
+      while (b64.length % 4) b64 += "=";
+      var bytes = Uint8Array.from(atob(b64), function (c) { return c.charCodeAt(0); });
+      var payload = JSON.parse(new TextDecoder().decode(bytes));
+      if (payload && typeof payload.nm === "string" && payload.nm.trim()) {
+        var el = document.getElementById("template-name");
+        el.querySelector("strong").textContent = payload.nm.trim().slice(0, 100);
+        el.hidden = false;
+      }
+    }
+  } catch (e) { /* Not a readable template: the page still explains what to do. */ }
+
+  // Put the store for this phone first. Both stay visible.
+  if (/Android/i.test(navigator.userAgent)) {
+    var stores = document.getElementById("stores");
+    stores.insertBefore(document.getElementById("store-android"), stores.firstChild);
+    document.getElementById("store-android").style.margin = "0 0 14px";
+    document.getElementById("store-ios").style.margin = "0";
+  }
+})();
+</script>
+</body>
+</html>
